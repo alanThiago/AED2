@@ -52,18 +52,25 @@ void Empilhar(Pilha *p, void* carga, char tipo){
 }
 
 void Desempilhar(Pilha *p){
-    Celula *aux = p->prim;
+    if(p->prim){
+        Celula *aux = p->prim;
 
-    p->prim = aux->prox;
-    free(aux->dado);
-    free(aux);
-    p->tamanho--;
+        p->prim = aux->prox;
+        free(aux->dado);
+        free(aux);
+        p->tamanho--;
+    }
 }
 
-void* PegarInicio(Pilha *p){ return p->prim->dado; }
+void* PegarInicio(Pilha *p){
+    if(p->prim) return p->prim->dado;
+    else return NULL;
+}
 
-unsigned TipoInicio(Pilha *p){ return (unsigned) p->prim->tipo; }
-
+unsigned TipoInicio(Pilha *p){
+    if(p->prim) return (unsigned) p->prim->tipo; 
+    else return 0;;
+}
 unsigned Tamanho(Pilha *p){ return p->tamanho; }
 
 void ImprimirPessoa(Pessoa *pessoa){
@@ -142,8 +149,8 @@ int main(){
 
     scanf("%u", &tipoComando);
     while(tipoComando){
-        if(tipoComando == 1 && Tamanho(pilha)) Desempilhar(pilha);
-        else if(tipoComando == 2 && Tamanho(pilha)){
+        if(tipoComando == 1) Desempilhar(pilha);
+        else if(tipoComando == 2){
             tipoInstancia = TipoInicio(pilha);
             if(tipoInstancia == 1){
                 pessoa = * (Pessoa *) PegarInicio(pilha);
@@ -153,7 +160,7 @@ int main(){
                 animal = * (AnimalEstimacao *) PegarInicio(pilha);
                 ImprimirAnimalEstimacao(&animal);
             }
-            else{
+            else if(tipoInstancia){
                 agenda = * (Agenda *) PegarInicio(pilha);
                 ImprimirAgenda(&agenda);
             }

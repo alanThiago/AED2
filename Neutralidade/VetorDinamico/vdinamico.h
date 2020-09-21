@@ -6,7 +6,7 @@ typedef struct{
     void *dados;
 } VDinamico;
 
-typedef char (* ComparaVD)(void*, void*);
+typedef char (* ComparaVD)(void* a, void* b);
 
 VDinamico* criarVD();
 void inserir(VDinamico *vd, void* carga, int pos);

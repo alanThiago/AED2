@@ -152,18 +152,9 @@ int main(){
         if(tipoComando == 1) Desempilhar(pilha);
         else if(tipoComando == 2){
             tipoInstancia = TipoInicio(pilha);
-            if(tipoInstancia == 1){
-                pessoa = * (Pessoa *) PegarInicio(pilha);
-                ImprimirPessoa(&pessoa);
-            }
-            else if(tipoInstancia == 2){
-                animal = * (AnimalEstimacao *) PegarInicio(pilha);
-                ImprimirAnimalEstimacao(&animal);
-            }
-            else if(tipoInstancia){
-                agenda = * (Agenda *) PegarInicio(pilha);
-                ImprimirAgenda(&agenda);
-            }
+            if(tipoInstancia == 1) ImprimirPessoa(PegarInicio(pilha));
+            else if(tipoInstancia == 2) ImprimirAnimalEstimacao(PegarInicio(pilha));
+            else if(tipoInstancia) ImprimirAgenda(PegarInicio(pilha));
         }
         else if(tipoComando == 3) printf("%u\n", Tamanho(pilha));
         scanf("%u", &tipoComando);  

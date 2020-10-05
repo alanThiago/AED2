@@ -3,7 +3,7 @@
 char EhHeap(int *v, int n, int pai){
 	if(pai){
 		char filhoMaior = 2*pai;
-		if(filhoMaior < n) if(v[filhoMaior] < v[filhoMaior+1]) ++filhoMaior;
+		if(filhoMaior < n && v[filhoMaior] < v[filhoMaior+1]) ++filhoMaior;
 		if(v[pai] < v[filhoMaior]) return 0;
 		return EhHeap(v, n, pai-1);
 	}

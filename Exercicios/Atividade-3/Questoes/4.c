@@ -3,49 +3,45 @@
 #include <string.h>
 
 typedef struct Autor{
-    struct Autor *prox;
     unsigned votos;
     char nome[31];
 } Autor;
 
 typedef struct{
-    Autor *prim, *ult;
+    Autor *v;
+    unsigned ocupacao;
+    unsigned size;
 } Fila;
 
 Fila* CriarFila(){
     Fila *f = (Fila*) malloc(sizeof(Fila));
-    f->prim = NULL;
+    f->ocupacao = 0;
+    f->size = 1;
+    f->v = (Autor*) malloc(sizeof(Autor));
     return f;
 }
 
 void Inserir(Fila *f, char *nome){
-    Autor *aux = f->prim;
-    while(aux){
-        if(!strcmp(aux->nome, nome)){ aux->votos++; return; }
-        aux = aux->prox;
+    for(unsigned i = 0; i < f->ocupacao; i++){
+        if(!strcmp(f->v[i].nome, nome)){
+            f->v[i].votos++;
+            return;
+        }
     }
 
-    aux = (Autor*) malloc(sizeof(Autor));
-    strcpy(aux->nome, nome);
-    aux->votos = 1;
-    aux->prox = NULL;
-
-    if(f->prim){
-        f->ult->prox = aux;
-        f->ult = aux;
-        return;
+    if(f->ocupacao == f->size){
+        f->size *= 2;
+        f->v = (Autor*) realloc(f->v, f->size * sizeof(Autor));
     }
 
-    f->prim = f->ult = aux;
+    strcpy(f->v[f->ocupacao].nome, nome);
+    f->v[f->ocupacao].votos = 1;
+    f->ocupacao++;
 }
 
 void Imprimir(Fila *f){
-    Autor *aux = f->prim;
-
-    while(aux){
-        printf("Autor: %s, Votos: %u\n", aux->nome, aux->votos);
-        aux = aux->prox;
-    }
+    for(unsigned i = 0; i < f->ocupacao; i++)
+        printf("Autor: %s, Votos: %u\n", f->v[i].nome, f->v[i].votos);
 }
 
 int main(){

@@ -1,10 +1,9 @@
 QUESTOES = $(wildcard ./Questoes/*.c)
-OBJETOS = $(subst .c,.o,$(subst Questoes,Objetos,$(QUESTOES)))
 EXECUTAVEIS = $(subst .c,,$(subst Questoes/,,$(QUESTOES)))
 CC = gcc
 FLAGS = -c -Wall -lm
 
-all: folders $(OBJETOS) $(EXECUTAVEIS)
+all: folders $(EXECUTAVEIS)
 
 ./Objetos/%.o: ./Questoes/%.c
 	$(CC) $(FLAGS) $< -o $@

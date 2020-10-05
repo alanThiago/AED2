@@ -100,7 +100,6 @@ void ImprimirPilha(VD *vd){
 }
 
 int main(){
-    int comando;
     int tipoInstancia;
     Passeio pas;
     Carga car;

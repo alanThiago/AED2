@@ -1,36 +1,32 @@
-#include "vdinamico.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include "pilha-neutra.h"
 
-void *criarInstanciaTipo(int valor){
-    int *carga = malloc(sizeof(int));
-    *carga = valor;
-    return carga;
+void* CriarInstaciaInteiro(int *dado){
+    int *d = (int*) malloc(sizeof(int));
+    *d = *dado;
+    return d;
 }
-
-char compararInstanciaTipo(void *a, void *b){
-    if( *(int*)a < *(int*)b) return 1;
-    return 0;
-}
-/*
-char comparar(void *a, void *b){
-    if( (int) *a < (int) *b) return 1;
-    return 0;
-}*/
 
 int main(){
-    VDinamico *vd = criarVD();
-    int k = 10;
-    int j;
+    PilhaNeutra *p = CriarPilhaNeutra();
+    int d;
+    int *x;
+    unsigned i;
 
-    for(j = 1; j < 11; j++, --k){
-        inserir(vd, criarInstanciaTipo(k), j);
+    for(i = 0; i < 10; i++){
+        scanf("%d", &d);
+        Empilhar(p, CriarInstaciaInteiro(&d));
     }
 
-    ordenar(vd, compararInstanciaTipo);
+    printf("Desempilhando\n");
 
-    for(j = 1; j < 11; j++){
-        printf("%d ", *(int*) acessar(vd, j));
+    while(!PNVazia(p)){
+        x = (int*) Desempilhar(p);
+        printf("%d ", *x);
+        free(x);
     }
     printf("\n");
-    
+
     return 0;
 }
